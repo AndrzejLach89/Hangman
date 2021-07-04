@@ -24,14 +24,20 @@ namespace Hangman
                 Console.WriteLine(e.Message);
                 CapitolsData = new CountriesAndCapitols();
                 CapitolsLoaded = false;
-                Console.WriteLine("dupa");
             }
         }
 
+        /*private static CountriesAndCapitols LoadCapitols()
+        {
+            CountriesAndCapitols loadedData = (CountriesAndCapitols)ReadData.ReadLines("./countries_and_capitals.txt", '|');
+            return loadedData;
+        }*/
+
         private static CountriesAndCapitols LoadCapitols()
         {
+            string path = GameSettings.Settings["countriesPath"];
             var loadedData = new CountriesAndCapitols();
-            string[] lines = File.ReadAllLines("./countries_and_capitals.txt");
+            string[] lines = File.ReadAllLines(path);
             foreach (string i in lines)
             {
                 if (i.Contains('|'))
