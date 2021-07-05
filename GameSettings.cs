@@ -9,12 +9,20 @@ namespace Hangman
 {
     static class GameSettings
     {
+        public static int WindowWidth { get; private set; }
+        private static int _minWidth = 80;
         public static Dictionary<string, string> Settings;
         static GameSettings()
         {
+            WindowWidth = Console.WindowWidth;
+            if (WindowWidth < _minWidth)
+            {
+                WindowWidth = _minWidth;
+            }
             try
             {
                 Settings = ReadData.ReadLines("game.cfg", '-');
+                Console.WriteLine(Settings);
             }
             catch (Exception e)
             {
