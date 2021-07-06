@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace Hangman
 {
@@ -34,13 +29,11 @@ namespace Hangman
             Console.ResetColor();
             Console.WriteLine("\n");
 
-            //string[] options = { ">> MAIN MENU <<", "\n", "(N)EW GAME", "(H)IGH SCORES", "(Q)UIT" };
             string[] options = { ">> MAIN MENU <<", "(N)EW GAME", "(H)IGH SCORES", "(Q)UIT" };
             foreach (string i in options)
             {
                 string line = i;
                 line = line.PadLeft((n + line.Length) / 2, ' ').PadRight(n, ' ');
-                //string line = i.PadLeft((n / 2 - i.Length) / 2, '.');//.PadRight(n, ' ');
                 Console.WriteLine(line);
             }
             return SelectOption();
@@ -53,18 +46,14 @@ namespace Hangman
             {
                 case 'q':
                     return false;
-                    //break;
                 case 'n':
                     new Game();
                     return true;
-                    //break;
                 case 'h':
                     new HighScores().ShowHighScores(null);
                     return true;
-                    //break;
                 default:
                     return true;
-                    //break;
             }
         }
     }

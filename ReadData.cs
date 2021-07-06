@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Hangman
@@ -17,10 +13,34 @@ namespace Hangman
             {
                 if (i.Contains(splitChar))
                 {
-                    string[] splittedLine = i.Split('|');
+                    string[] splittedLine = i.Split(splitChar);
                     string key = splittedLine[0].Trim(' ');
                     string value = splittedLine[1].Trim(' ');
                     loadedData.Add(key, value);
+                }
+            }
+            return loadedData;
+        }
+
+        public static List<string[]> ReadScores()
+        {
+            var loadedData = new List<string[]>();
+            if (File.Exists("./HighScores"))
+            {
+                string[] lines = File.ReadAllLines("./HighScores");
+                foreach (string i in lines)
+                {
+                    if (i.Contains('|'))
+                    {
+                        string[] splittedLine = i.Split('|');
+                        int cnt = 0;
+                        foreach (string j in splittedLine)
+                        {
+                            splittedLine[cnt] = j.Trim(' ');
+                            cnt++;
+                        }
+                        loadedData.Add(splittedLine);
+                    }
                 }
             }
             return loadedData;

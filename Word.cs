@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hangman
 {
@@ -27,7 +23,6 @@ namespace Hangman
 
         public string UpdateMask(char x)
         {
-            Console.WriteLine("char {0}; word: {1}, wordchars: {2}, wordmask: {3}", x, word, WordChars, WordMask);
             int index = 0;
             foreach (char i in WordChars)
             {
@@ -56,9 +51,6 @@ namespace Hangman
 
         public bool CheckLetter(char letter)
         {
-            Console.WriteLine("char {0}; word: {1}, wordchars: {2}, wordmask: {3}", letter, word, WordChars.ToString(), WordMask.ToString());
-            foreach (var i in WordChars) { Console.Write(i); }
-            Console.ReadKey();
             if (word.ToUpper().Contains(Char.ToUpper(letter)))
             {
                 return true;
