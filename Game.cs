@@ -127,14 +127,21 @@ namespace Hangman
             {
                 Console.WriteLine(hint);
             }
-            Console.WriteLine(Mask);
+            Console.WriteLine("\n");
+            foreach (char i in Mask)
+            {
+                Console.Write(i);
+                Console.Write(' ');
+            }
+            Console.WriteLine("\n");
+            //Console.WriteLine(Mask);
             //Console.WriteLine("ROUND {0}\nLives: {1}\nUsed letters: {2}", _roundCounter, Lives, GetLetters());
             //if (Lives <= 1)
             //{
             //    Console.WriteLine("HINT: Capitol of {0}", _country);
             //}
             //Console.WriteLine(Mask);
-        }
+        }        
 
         private void PlayRound(string? message)
         {
@@ -145,7 +152,8 @@ namespace Hangman
                 Console.WriteLine(message);
                 Console.ResetColor();
             }
-            Console.WriteLine("What do you want to do?\n(L)ETTER\n(W)ORD\n(Q)UIT");
+            //Console.WriteLine("What do you want to do?\nGUESS (L)ETTER\nGUESS (W)ORD\n(Q)UIT");
+            Utilities.WriteCommandKeys("What do you want to do?\nGUESS (L)ETTER\nGUESS (W)ORD\n(Q)UIT");
             char[] options = { 'l', 'w', 'q' };
             char input;
             //do
