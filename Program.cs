@@ -9,6 +9,10 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
+            if (args.Contains("godmode"))
+            {
+                GameSettings.GodMode = true;
+            }
             GameMenu.MainMenu();
         }
     }

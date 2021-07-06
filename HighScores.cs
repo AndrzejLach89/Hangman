@@ -65,7 +65,12 @@ namespace Hangman
             }
             while (!valid);
             PlayerScore player;
-            if (name.ToLower().Equals("nwctim"))
+            if (GameSettings.GodMode)
+            {
+                name = "Cheater!";
+                player = new PlayerScore(name, lives, gameTime, points, rounds);
+            }
+            else if (name.ToLower().Equals("nwctim"))
             {
                 name = "Wizard Tim";
                 lives = 99;

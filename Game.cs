@@ -21,7 +21,16 @@ namespace Hangman
 
         public Game()
         {
-            string[] pickedCountry = Setup.CapitolsData.PickCountry();
+            string[] pickedCountry;
+            try
+            {
+                pickedCountry = Setup.CapitolsData.PickCountry();
+            }
+            catch
+            {
+                pickedCountry = new string[2];
+                Environment.Exit(0);
+            }
             _country = pickedCountry[0];
             _capitol = pickedCountry[1];
             _guess = new Word(_capitol, Convert.ToChar(GameSettings.Settings["symbol"]));
@@ -31,14 +40,17 @@ namespace Hangman
             NotInWord = new List<char>();
             Mask = "".PadRight(toGuess, Convert.ToChar(GameSettings.Settings["symbol"]));
             StartTime = DateTime.Now;
-            GodMode();
+            if (GameSettings.GodMode)
+            {
+                GodMode();
+            }
             NextRound(null);
         }
 
         private void GodMode()
         {
             Console.Clear();
-            Console.WriteLine(_capitol);
+            Console.WriteLine("Pssst! {0} will be the answer!", _capitol);
             Console.ReadKey();
             Console.Clear();
         }
@@ -136,11 +148,11 @@ namespace Hangman
             Console.WriteLine("What do you want to do?\n(L)ETTER\n(W)ORD\n(Q)UIT");
             char[] options = { 'l', 'w', 'q' };
             char input;
-            do
-            {
-                input = Console.ReadKey().KeyChar;
-            }
-            while (!options.Contains(input));
+            //do
+            //{
+            input = Console.ReadKey().KeyChar;
+            //}
+            //while (!options.Contains(input));
             input = Char.ToLower(input);
             switch (input)
             {
@@ -173,7 +185,7 @@ namespace Hangman
                     Console.WriteLine(message);
                     Console.ResetColor();
                 }
-                Console.Write("\nEnter letter: ");
+                Console.Write("\nEnter letter (or press ESC to cancel): ");
                 rawInput = Console.ReadKey();
                 if (rawInput.Key == ConsoleKey.Escape)
                 {
@@ -184,7 +196,7 @@ namespace Hangman
                 if (!Char.IsLetter(input) && input !=(' '))
                 {
 
-                    GuessLetter("Please use alphabet letters and whitespaces only.\nPress any key to continue.");
+                    GuessLetter("Please use alphabet letters and whitespaces only.");
                     return;
                 }
                 else
@@ -192,7 +204,7 @@ namespace Hangman
                     validChar = ValidateInput(input);
                     if (!validChar)
                     {
-                        string msg = "You have already used letter " + input + "!";
+                        string msg = "You have already used letter '" + input + "'!";
                         GuessLetter(msg);
                         return;
                     }
@@ -228,7 +240,7 @@ namespace Hangman
                     Console.WriteLine(message);
                     Console.ResetColor();
                 }
-                Console.Write("\nEnter word: ");
+                Console.Write("\nEnter word (or just press ENTER to return): ");
                 input = Console.ReadLine();
                 input = input.ToUpper();
                 validInput = ValidateInput(input);
@@ -239,6 +251,11 @@ namespace Hangman
                 }
             }
             while (!validInput);
+            if (String.IsNullOrEmpty(input))
+            {
+                PlayRound(null);
+                return;
+            }
             string result;
             if (_guess.CheckWord(input))
             {
@@ -267,7 +284,7 @@ namespace Hangman
         {
             if (String.IsNullOrWhiteSpace(s))
             {
-                return false;
+                return true;
             }
             foreach (char i in s)
             {

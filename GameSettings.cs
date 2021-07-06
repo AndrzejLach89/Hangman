@@ -6,9 +6,11 @@ namespace Hangman
 {
     static class GameSettings
     {
-        public static int WindowWidth { get; private set; }
+        public static bool GodMode = false;
         private static int _minWidth = 80;
         public static Dictionary<string, string> Settings;
+        public static int WindowWidth { get; private set; }
+        
         static GameSettings()
         {
             try
